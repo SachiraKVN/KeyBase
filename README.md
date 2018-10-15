@@ -6,7 +6,7 @@ With sqlite3 & tkinter modules.Make sure to have Python3
 on computer before using.
 
 Execute application
-===============================
+--------------------
 
 1. Copy the KeyBase/Src directory in desired location.
 2. Move into src/app directory.
