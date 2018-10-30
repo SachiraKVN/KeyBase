@@ -1,3 +1,4 @@
+import config
 import model as md
 import libs.nucrypt as nc
 
@@ -5,8 +6,8 @@ import libs.nucrypt as nc
 def add_data(*args, **kwargs):
     """ Add a connection to Database 
         notes: name and connection type save in lowercaase letters
-    """
-    conn = md.create_connection('connection.db')
+    """    
+    conn = md.create_connection("%s/connection.db"%(config.root))
     if conn is not None:
         md.create_table(conn)
         md.insert_data(conn, args[0])
@@ -23,7 +24,7 @@ def get_data(view, name):
         @name : name query to get data
     """
     cp = nc.NuCrypt()
-    conn = md.create_connection('connection.db') 
+    conn = md.create_connection("%s/connection.db"%(config.root)) 
     if conn is not None:
         result = md.select_from(conn, name)
 
@@ -43,13 +44,14 @@ def update_data(*args, **kwargs):
     cp = nc.NuCrypt()
     data = args[0]
     query = "update credential set name='{name}', type='{type}', user='{user}', password='{password}', url='{url}' where id={id};".format(name=data['name'].get().lower(), type=data['type'].get().lower(), user=data['user'].get(), password=cp.encrypt(data['password'].get()), url=data['url'].get(),id=data['id'].get())
-    con = md.create_connection('connection.db')
+    con = md.create_connection("%s/connection.db"%(config.root))
     if con is not None:
         try:
             result = md.execute_query(con,  query)
             con.commit()
         except Error as e:
-            print(e)
+            pass            
+            # print(e)
     
     clearField(data)
     con.close()
@@ -59,7 +61,7 @@ def listInsert(element):
     """ 
         Get Available connection and insert into given listbox
     """
-    conn = md.create_connection('connection.db') 
+    conn = md.create_connection("%s/connection.db"%(config.root)) 
 
     result = md.execute_query(conn, "select distinct name from credential")
     if result:
@@ -94,7 +96,7 @@ def entryInsert(event, fields):
 
     element = event.widget
     val = event.widget.get()
-    conn = md.create_connection('connection.db')
+    conn = md.create_connection("%s/connection.db"%(config.root))
     cp = nc.NuCrypt()
 
     # Get data from the database
@@ -114,8 +116,11 @@ def entryInsert(event, fields):
 
         fields['url'].delete(0, 'end')        
         fields['url'].insert(0, results[0][5])
-def clearField(elements):
 
+def clearField(elements):
+    """
+    Reset form fields
+    """
     for element in elements:
         elements[element].set('')
         

@@ -8,17 +8,18 @@ def create_connection(db_file):
     conn = None
     try:
         conn = sqlite3.connect(db_file)
-        print('connected to database :'+ db_file)
+        # print('connected to database :'+ db_file)
         return conn
     except Error as e:
-        print(e)
+        pass
+        # print(e)
     return None
 
 def create_table(conn):
     """ Create a table in sqlite Database file """
     try:
         c = conn.cursor()
-        print('table creation started.')
+        # print('table creation started.')
         sql = """create table credential( 
                     id integer primary key autoincrement, 
                     name char(50) not null,
@@ -29,13 +30,14 @@ def create_table(conn):
                     );"""
 
         c.execute(sql)
-        print('table created.')
+        # print('table created.')
     except Error as e:
-        print(e)
+        pass
+        # print(e)
 
 def insert_data(conn, data):
     """ Add data to created table """
-    print('data adding started')
+    # print('data adding started')
 
     cp = nc.NuCrypt()
     try:
@@ -47,8 +49,9 @@ def insert_data(conn, data):
         c.execute(sql2)
         conn.commit() #commit is mandatory
     except Error as e:
-        print(e)
-        print("DONE:", sql2)
+        pass
+        # print(e)
+        # print("DONE:", sql2)
     finally:
         c.close()
 
@@ -57,27 +60,29 @@ def select_from(conn, query):
     try:
         c = conn.cursor()
         sql = """ select * from credential where name='{name}';""".format(name=query.lower())
-        print(sql)
+        # print(sql)
         c.execute(sql)
         rows = c.fetchall()
 
         return rows
         
     except Error as e:
-        print(e)
+        pass
+        # print(e)
     finally:
         c.close()
 def execute_query(conn, query):
     """ Execute Given query on given database connection"""
     try:
         c = conn.cursor()
-        print(query)
+        # print(query)
         c.execute(query)
         rows = c.fetchall()
 
         return rows
     except Error as e:
-        print(e)
+        pass
+        # print(e)
 
 if __name__ == '__main__':
     create_connection('default.db')

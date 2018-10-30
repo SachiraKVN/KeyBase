@@ -46,7 +46,7 @@ class NuCrypt():
     def encrypt(self, plaintext):
 
         salt = Crypto.Random.get_random_bytes(self.salt_size)
-        print(salt)
+        # print(salt)
         key = self.generate_key(salt, self.num_iteration)
 
         cipher = AES.new(key, AES.MODE_ECB)
@@ -63,10 +63,10 @@ class NuCrypt():
         return str
     
     def decrypt(self, ciphertext):  
-        print(ciphertext)
+        # print(ciphertext)
         binary_data = binascii.unhexlify(ciphertext.encode('utf-8'))
         salt = binary_data[0:self.salt_size]
-        print(salt)
+        # print(salt)
         ciphertext_sans_salt = binary_data[self.salt_size:]
 
         key = self.generate_key(salt, self.num_iteration)
