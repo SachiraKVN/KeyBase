@@ -20,7 +20,7 @@ class Home(tk.Frame):
         self.squery = tk.StringVar()
         ent01 = tk.Entry(search_container, width=60, textvariable=self.squery)
         ent01.grid(row=0)
-        btn01 = tk.Button(search_container, text="Search", width=6, command=lambda:ctrl.get_data(t01, self.squery.get()))
+        btn01 = tk.Button(search_container, text="Search", width=6, command=lambda:ctrl.listSearch(t02, self.squery.get()))
         btn01.grid(row=0, column=9, padx=(15, 0))
 
         # =========================== Result Container =======================

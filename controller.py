@@ -74,6 +74,21 @@ def listInsert(element):
     conn.close()
 
 
+def listSearch(list, query):
+    """ 
+    Connection Search
+    """
+    try:
+        elem = list
+        result = list.get(0, "end").index(query)
+        value = list.get(result)
+
+        list.delete(0, 'end')
+        list.insert(0, value)
+    except ValueError:
+        print("no record found")
+
+
 def onSelect(event, output):
     """
          Add connection detils to the display on item select on listbox
